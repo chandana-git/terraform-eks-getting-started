@@ -53,9 +53,9 @@ stage("TF"){
    //withCredentials([kubeconfigFile(credentialsId: 'kube_config', variable: 'KUBECONFIG')]){
      sh "${tfHome}/terraform output config_map_aws_auth > configmap.yml"
      
-    sh 'kubectl apply -f deploy.yml'
+    sh 'kubectl create -f deploy.yml'
     sh 'kubectl apply -f configmap.yml'
-    sh 'kubectl apply -f svc.yml'
+    sh 'kubectl create -f svc.yml'
     sh 'kubectl expose deployment webapp-deploy --type=LoadBalancer'
     sleep 30
     sh 'kubectl get service'    
